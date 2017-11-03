@@ -1,0 +1,71 @@
+<h1>Repositories</h1>
+<br>
+<%= link_to "Create Repo", "#myModal", 'data-toggle' =>  "modal" %>
+<br><br>
+<h4>Enabled Repos</h4>
+<table class="table table-striped" style="width:50%">
+  <tr>
+    <th>Repo id</th>
+    <th>Action</th>
+  </tr>
+ <% $i=1; while $i < @enabledrepo.size  do %>
+  <tr>
+    <td><%= @enabledrepo[$i] %></td>
+    <td>
+   
+      <%= link_to "Disable", repo_disable_path(:repo => @enabledrepo[$i]) %>
+    </td>
+    
+       
+  </tr> 
+  <% $i +=1 %>
+   <% end %>
+</table>
+
+<br><br>
+<h4>Disabled Repos</h4>
+<table class="table table-striped" style="width:50%">
+  <tr>
+    <th>Repo id</th>
+    <th>Action</th>
+  </tr>
+ <% $i=1; while $i < @disabledrepo.size  do %>
+  <tr>
+    <td><%= @disabledrepo[$i] %></td>
+    
+    <td>
+    <%= link_to "enable repo", "#myModal", 'data-toggle' =>  "modal" %>
+    </td>  
+  </tr> 
+  <% $i +=1 %>
+   <% end %>
+</table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create New Repo</h4>
+      </div>
+     
+        <%= form_tag(usermanagement_create_path, method: 'POST')  do %>
+        <div class="modal-body">
+        <%= label_tag("Repo Name:") %>
+        <%= text_field_tag(:reponame) %>
+        <br><br>
+        <%= label_tag("BaseURL:") %>
+        <%= password_field_tag(:baseurl) %>
+        <br><br>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= submit_tag("Create",:class => 'btn btn-primary') %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

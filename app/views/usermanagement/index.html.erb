@@ -1,0 +1,61 @@
+<h4>Users -</h4>
+<br>
+<%= link_to "Add User", "#myModal", 'data-toggle' =>  "modal" %>
+<br><br>
+<table class="table table-striped">
+  <tr>
+    <th>UID</th>
+    <th>GID</th>
+    <th>Username</th>
+    <th>Gecos</th>
+    <th>Home Directory</th>
+    <th>Shell</th>
+    <th colspan="2">Action</th>
+  </tr>
+  <% @json.each do |user| %>
+  <tr>
+    <td><%= user['uid'] %></td>
+    <td><%= user['gid'] %></td>
+    <td><%= user['username'] %></td>
+    <td><%= user['gecos'] %></td>
+    <td><%= user['home'] %></td>
+    <td><%= user['shell'] %></td>
+    <td><%= link_to "Edit User", "#myModal", 'data-toggle' =>  "modal" %></td>
+    <td><%= link_to "Delete User", usermanagement_destory_path(:username => user['username']) %></td>    
+  </tr> 
+   <% end %>
+</table>
+
+<br>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add User</h4>
+      </div>
+     
+        <%= form_tag(usermanagement_create_path, method: 'POST')  do %>
+        <div class="modal-body">
+        <%= label_tag("Username:") %>
+        <%= text_field_tag(:username) %>
+        <br><br>
+        <%= label_tag("Password:") %>
+        <%= password_field_tag(:password) %>
+        <br><br>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= submit_tag("Create",:class => 'btn btn-primary') %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

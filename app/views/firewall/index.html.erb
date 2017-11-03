@@ -1,0 +1,99 @@
+<h1>Firewall</h1>
+
+
+
+<div class="row">
+<div class="col-lg-5">
+<h4>Services</h4>
+ 
+  <%= link_to "Add Service", "#myModal", 'data-toggle' =>  "modal" %>
+  <br><br>
+<table class="table table-striped" style="width:50%">
+  <tr>
+    <th>Services</th>
+    <th>Action</th>
+  </tr>
+  <% @test.each do |service| %>
+  <tr>
+    <td><%= service %></td>   
+    <td><%= link_to "Remove", firewall_removeservice_path(:service => service) %></td>    
+  </tr> 
+   <% end %>
+</table>
+</div>
+<div class="col-lg-5">
+ 
+  <h4>Port</h4>
+ 
+  <%= link_to "Add port", "#myportModal", 'data-toggle' =>  "modal" %>
+  <br><br>
+  
+<table class="table table-striped" style="width:50%">
+  <tr>
+    <th>Ports</th>
+    <th>Action</th>
+  </tr>
+  <% @ports.each do |port| %>
+  <tr>
+    <td><%= port %></td>   
+    <td><%= link_to "Remove", firewall_removeport_path(:fport => port) %></td>    
+  </tr> 
+   <% end %>
+</table>
+  
+</div>
+
+</div>
+
+
+<!-- Service Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add service in firewall</h4>
+      </div>
+     
+        <%= form_tag(firewall_addservice_path, method: 'POST')  do %>
+        <div class="modal-body">
+        <%= label_tag("Service name:") %>
+        <%= text_field_tag(:service) %>
+        <br><br>
+      
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= submit_tag("Add",:class => 'btn btn-primary') %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- port Modal -->
+<div class="modal fade" id="myportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add port in firewall</h4>
+      </div>
+     
+        <%= form_tag(firewall_addport_path, method: 'POST')  do %>
+        <div class="modal-body">
+        <%= label_tag("Port no.:") %>
+        <%= number_field_tag 'fport', nil, min:1 %>
+        <br><br>
+      
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= submit_tag("Add",:class => 'btn btn-primary') %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

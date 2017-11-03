@@ -1,0 +1,95 @@
+<h1>Httpd Server</h1> 
+<br>
+<%= link_to "Add virtualhost", "#myModal", 'data-toggle' =>  "modal" %>
+<br><br>
+<h3>Virtual Hosts -</h3>
+
+
+
+
+
+<table class="table table-striped" style="width:70%">
+  <tr>
+    
+    <th>Server name</th>
+    <th>Document root</th>
+    <th>Port</th>
+    <th>Conf file</th>
+    <th colspan="2">Action</th>
+  </tr>
+ <% @json.each do |list| %>
+  <tr>
+    
+    <td><%= list['servername'] %></td>
+    <td><%= list['documentroot'] %></td>
+    <td><%= list['port'] %></td>
+    <td><%= list['file'] %></td>
+    <td><%= link_to "advance", 'data-toggle' =>  "modal", "data-target" => "#advanceModal" %></td>
+    <td><%= link_to "Delete", httpd_install_path(:server => list['servername']) %></td>
+  </tr> 
+<% end %>
+</table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Virtual Host</h4>
+      </div>
+     
+        <%= form_tag(httpd_create_path, method: 'POST')  do %>
+        <div class="modal-body">
+        <%= label_tag("ServerName:") %>
+        <%= text_field_tag(:servername) %>
+        <br><br>
+        <%= label_tag("Document Root:") %>
+        <%= text_field_tag(:documentroot) %>
+        <br><br>
+        <%= label_tag("Port:") %>
+        <%= text_field_tag(:port) %>
+        <br><br>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= submit_tag("Create",:class => 'btn btn-primary') %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Advance Modal -->
+<div class="modal fade" id="advanceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Advance</h4>
+      </div>
+     
+        <%= form_tag(httpd_advance_path, method: 'POST')  do %>
+        <div class="modal-body">
+        <%= label_tag("Require IP:") %>
+        <%= text_field_tag(:requireip) %>
+        <br><br>
+        <%= label_tag("Require Host:") %>
+        <%= text_field_tag(:requirehost) %>
+      
+        <br><br>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= submit_tag("Submit",:class => 'btn btn-primary') %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+ 

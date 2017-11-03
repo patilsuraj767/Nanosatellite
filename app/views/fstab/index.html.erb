@@ -1,0 +1,27 @@
+<h1>Mount Points</h1>
+
+<table class="table table-striped" >
+  <tr>
+    
+    <th>Disk/Partition</th>
+    <th>mount point</th>
+    <th>file system</th>
+    <th>mount options</th>
+    <th>dump value</th>
+    <th>fsck</th>
+    <th colspan="2">Action</th>
+  </tr>
+ <% @json.each do |list| %>
+  <tr>
+    
+    <td><%= list['disk'] %></td>
+    <td><%= list['mountpt'] %></td>
+    <td><%= list['filesystem'] %></td>
+    <td><%= list['mountoption'] %></td>
+     <td><%= list['dump'] %></td>
+     <td><%= list['fsck'] %></td>
+    
+    <td><%= link_to "Delete", fstab_remove_path(:entry => list['disk']) %></td>
+  </tr> 
+<% end %>
+</table>

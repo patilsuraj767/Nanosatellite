@@ -1,0 +1,75 @@
+<h1>Samba Server</h1>
+ <%= link_to "Create Share", "#myModal", 'data-toggle' =>  "modal" %>
+
+<table class="table table-striped" style="width:70%">
+  <tr>
+    
+    <th>Share Name</th>
+    <th>Path</th>
+    <th>Browseable</th>
+    <th>Valid users</th>
+    <th>Read list</th>
+    <th>Write list</th>
+    <th>Actions</th>
+  </tr>
+ <% @json.each do |list| %>
+  <tr>
+    
+    <td><%= list['sharename'] %></td>
+    <td><%= list['path'] %></td>
+    <td><%= list['browseable'] %></td>
+    <td><%= list['validusers'] %></td>
+    <td><%= list['readlist'] %></td>
+    <td><%= list['writelist'] %></td>
+    
+    
+    
+    <td><%= link_to "Delete", samba_delete_path(:share => list['sharename']) %></td>
+  </tr> 
+<% end %>
+</table>
+
+<!-- Samba Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create Samba Share</h4>
+      </div>
+     
+        <%= form_tag(samba_createshare_path, method: 'POST')  do %>
+        <div class="modal-body">
+        <%= label_tag("Share Name:") %>
+        <%= text_field_tag(:sharename) %>
+        <br><br>
+        <%= label_tag("path:") %>
+        <%= text_field_tag(:path) %>
+        <br><br>  
+         <%= label_tag("Browseable:") %>
+        <%= radio_button_tag 'browseable', 'yes' %> YES
+          
+          <%= radio_button_tag 'browseable', 'no' %> NO
+        <br><br>
+           <%= label_tag("valid users:") %>
+        <%= text_field_tag(:validusers) %>
+        <br><br>
+            <%= label_tag("Read list:") %>
+        <%= text_field_tag(:readlist) %>
+        <br><br>
+            <%= label_tag("Write list:") %>
+        <%= text_field_tag(:writelist) %>
+        <br><br>
+          
+          
+      
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= submit_tag("Add",:class => 'btn btn-primary') %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

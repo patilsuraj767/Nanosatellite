@@ -1,0 +1,2 @@
+module HttpdHelper
+end
